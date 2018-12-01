@@ -21,7 +21,4 @@ public interface IMainView {
 
     void showProgressbar();
 
-    void dissmisProgressbar();
-
-    void showTryAgain();
 }
