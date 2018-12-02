@@ -33,7 +33,6 @@ class MainPresenter {
 
 
     private void loadUrl() {
-        view.showProgressbar();
         view.loadWebViewUrl();
 
         new android.os.Handler().postDelayed(() -> {

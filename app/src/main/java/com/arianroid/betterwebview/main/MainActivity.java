@@ -60,27 +60,42 @@ public class MainActivity
 
 
         webView = findViewById(R.id.webView1);
-        webView.setWebViewClient(new CustomeWebViewClient());
-        webView.setBackgroundColor(getColor(R.color.alpha));
 
+        // set custom webview client
+        webView.setWebViewClient(new CustomeWebViewClient());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            webView.setBackgroundColor(getColor(R.color.alpha));
+        } else webView.setBackgroundColor(getResources().getColor(R.color.alpha));
+
+        // enable zoom feature
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true); // allow pinch to zooom
-        webView.getSettings().setDisplayZoomControls(false); // disable the default zoom controls on the page
+
+        // allow pinch to zoom
+        webView.getSettings().setBuiltInZoomControls(true);
+
+        // disable the default zoom controls on the page
+        webView.getSettings().setDisplayZoomControls(false);
 
         // Enable responsive layout
         webView.getSettings().setUseWideViewPort(true);
+
         // Zoom out if the content width is greater than the width of the viewport
         webView.getSettings().setLoadWithOverviewMode(true);
 
+        //enable java script
         webView.getSettings().setJavaScriptEnabled(true);
+
+        //set a scrollbar
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
+        // speed up performance for older device
         if (Build.VERSION.SDK_INT >= 19) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         } else {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
+        //init views
         splashDialog = new Dialog(this, R.style.myDialog);
         splashDialog.setContentView(R.layout.dialog_splash);
         splashDialog.show();
@@ -95,6 +110,7 @@ public class MainActivity
         tryAgainTxt.setVisibility(View.INVISIBLE);
         tryAgainTxt.setOnClickListener(v -> presenter.viewIsReady());
 
+        //connect progressbar with chrome web view
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, final int newProgress) {
@@ -176,6 +192,7 @@ public class MainActivity
             progressbarValue = progress;
         });
     }
+
     @Override
     public void showProgressbar() {
         progressBar.setIndeterminate(true);
